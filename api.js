@@ -19,7 +19,7 @@ function stations() {
 
 function callSuccess(data) {
     document.getElementById('result').innerHTML = 'Data retrieved successfully';
-
+//foreach. json object, adds station.name into select: obj,obj,array,obj
     for (var station of JSON.parse(data).stations.station) {
         var s = document.getElementById("select_station");
         var option = document.createElement("option");
@@ -30,6 +30,7 @@ function callSuccess(data) {
 }
 
 function getStation(){
+
 
 var index = document.getElementById('select_station').selectedIndex;
 
@@ -57,10 +58,46 @@ var s='{"id":';
 }
 
 function callSuccessStation(data){
-  console.dir(data);
+
   if(data.station == null){
     document.getElementById('data').innerHTML = 'station = null';
   }else {
-    document.getElementById('data').innerHTML = 'callSuccessStation: ' + data.station.name;  
-  }
+    document.getElementById('data').innerHTML = 'callSuccessStation: ' + data.station.name;
+    tableCreate(data);
+    //obj,obj,obj,array,obj
+    //for (var transfer of data.station.transfers.transfer){
+    //var s = document.getElementById('data2').innerHTML = transfer.arrival;
+    //console.log(s);
+  //}
+}
+}
+
+function tableCreate(data) {
+    var body = document.getElementsByTagName('body')[0];
+    var tbl = document.createElement('table');
+    //sets property id for the element 'table'
+    tbl.id = "table"
+    tbl.style.width = '100%';
+    var tbdy = document.createElement('tbody');
+    //loops foreach
+    for (var transfer of data.station.transfers.transfer) {
+        var tr = document.createElement('tr');
+                var td = document.createElement('td');
+                //this makes it so i don't have to wonder what 0000-00-00 00:00:00 is
+                if(transfer.arrival == '0000-00-00 00:00:00'){
+                  td.appendChild(document.createTextNode('Finns inte'))
+                }else{
+                  td.appendChild(document.createTextNode(transfer.arrival))
+                }
+                //still need to know what the fuck this is
+                tr.appendChild(td)
+                tbdy.appendChild(tr);
+            }
+    //and this
+    tbl.appendChild(tbdy);
+    body.appendChild(tbl)
+}
+
+function tableDelete(){
+
 }
