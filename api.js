@@ -61,6 +61,7 @@ function callSuccessStation(data){
 
   if(data.station == null){
     document.getElementById('data').innerHTML = 'station = null';
+    tableDelete();
   }else {
     document.getElementById('data').innerHTML = 'callSuccessStation: ' + data.station.name;
     tableCreate(data);
@@ -73,31 +74,37 @@ function callSuccessStation(data){
 }
 
 function tableCreate(data) {
-    var body = document.getElementsByTagName('body')[0];
     var tbl = document.createElement('table');
-    //sets property id for the element 'table'
-    tbl.id = "table"
     tbl.style.width = '100%';
     var tbdy = document.createElement('tbody');
+    var th = document.createAttribute('th');
+    //table head list, don't know where if it will work
+    let list = [];
+
     //loops foreach
     for (var transfer of data.station.transfers.transfer) {
-        var tr = document.createElement('tr');
                 var td = document.createElement('td');
                 //this makes it so i don't have to wonder what 0000-00-00 00:00:00 is
                 if(transfer.arrival == '0000-00-00 00:00:00'){
-                  td.appendChild(document.createTextNode('Finns inte'))
+                  td.appendChild(document.createTextNode('Finns inte'));
                 }else{
-                  td.appendChild(document.createTextNode(transfer.arrival))
+                  td.appendChild(document.createTextNode(transfer.arrival));
                 }
-                //still need to know what the fuck this is
+                //somehow works when i put tr here
+                //<tr>
+                //<td>transfer.arrival</td>
+                //</tr>
+                var tr = document.createElement('tr');
                 tr.appendChild(td)
                 tbdy.appendChild(tr);
+                //console.log(tr);
             }
-    //and this
     tbl.appendChild(tbdy);
-    body.appendChild(tbl)
+    document.getElementById('data').appendChild(tbl);
+
 }
 
 function tableDelete(){
-
+    document.getElementById('data') = "";
 }
+
