@@ -86,10 +86,19 @@ function tableCreate(data) {
                 var td = document.createElement('td');
                 //this makes it so i don't have to wonder what 0000-00-00 00:00:00 is
                 if(transfer.arrival == '0000-00-00 00:00:00'){
-                  td.appendChild(document.createTextNode('Finns inte'));
+                  td.appendChild(document.createTextNode('Fuck you'));
                 }else{
-                  td.appendChild(document.createTextNode(transfer.arrival));
+                  td.appendChild(document.createTextNode(transfer.arrival + ' '));
+                  td.appendChild(document.createTextNode(transfer.train + ' '));
+                  td.appendChild(document.createTextNode(transfer.origin + ' '));
+                  td.appendChild(document.createTextNode(transfer.destination + ' '));
+                  if(transfer.newDeparture == null){
+                  td.appendChild(document.createTextNode(transfer.departure));
+                } else{
+                  td.appendChild(document.createTextNode(transfer.newDeparture));
                 }
+                }
+
                 //somehow works when i put tr here
                 //<tr>
                 //<td>transfer.arrival</td>
@@ -107,4 +116,3 @@ function tableCreate(data) {
 function tableDelete(){
     document.getElementById('data') = "";
 }
-
