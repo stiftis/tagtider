@@ -81,16 +81,16 @@ function tableCreate(data) {
     //table head list, don't know where if it will work
     var list = ["Ankomst","Tågnummer", "Origin", "Destination", "Departure"];
 
-    var th = document.createElement('th');
     var tr = document.createElement('tr');
 
     list.forEach( function(item){
+        var th = document.createElement('th');
         var i = item;
         th.appendChild(document.createTextNode(item));
+        tr.appendChild(th);
         console.log(item);
     });
 
-    tr.appendChild(th);
     tbdy.appendChild(tr);
 
     //loops foreach
