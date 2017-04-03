@@ -84,9 +84,10 @@ function tableCreate(data) {
     var tr = document.createElement('tr');
 
     list.forEach( function(item){
-    var th = document.createElement('th');
+        var th = document.createElement('th');
         var i = item;
         th.appendChild(document.createTextNode(item));
+        tr.appendChild(th);
         console.log(item);
     tr.appendChild(th);
     });
