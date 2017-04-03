@@ -82,12 +82,12 @@ function tableCreate(data) {
 
     list.forEach( function(item){
         var i = item;
-        var th = document.createElement('th');
         var tr = document.createElement('tr');
+        var th = document.createElement('th');
 
-        th.appendChild(document.createTextNode(item));
-        tr.appendChild(th);
-        tbdy.appendChild(tr);
+        tr.appendChild(document.createTextNode(item));
+        th.appendChild(tr);
+        tbdy.appendChild(th);
         console.log(item);
     });
 
