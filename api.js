@@ -81,16 +81,16 @@ function tableCreate(data) {
     //table head list, don't know where if it will work
     var list = ["Ankomst","Tågnummer", "Origin", "Destination", "Departure"];
 
-    var th = document.createElement('th');
     var tr = document.createElement('tr');
 
     list.forEach( function(item){
+    var th = document.createElement('th');
         var i = item;
         th.appendChild(document.createTextNode(item));
         console.log(item);
+    tr.appendChild(th);
     });
 
-    tr.appendChild(th);
     tbdy.appendChild(tr);
 
     //loops foreach
@@ -106,22 +106,22 @@ function tableCreate(data) {
                   tbdy.appendChild(tr);
                 }else{
                   var td = document.createElement('td');
-                  td.appendChild(document.createTextNode(transfer.arrival + ' '));
+                  td.appendChild(document.createTextNode(transfer.arrival));
                   tr.appendChild(td)
                   tbdy.appendChild(tr);
 
                   td = document.createElement('td');
-                  td.appendChild(document.createTextNode(transfer.train + ' '));
+                  td.appendChild(document.createTextNode(transfer.train));
                   tr.appendChild(td)
                   tbdy.appendChild(tr);
 
                   td = document.createElement('td');
-                  td.appendChild(document.createTextNode(transfer.origin + ' '));
+                  td.appendChild(document.createTextNode(transfer.origin));
                   tr.appendChild(td)
                   tbdy.appendChild(tr);
 
                   td = document.createElement('td');
-                  td.appendChild(document.createTextNode(transfer.destination + ' '));
+                  td.appendChild(document.createTextNode(transfer.destination));
 
                   if(transfer.newDeparture == null){
                   td = document.createElement('td');
