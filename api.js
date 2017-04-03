@@ -76,6 +76,7 @@ function callSuccessStation(data){
 function tableCreate(data) {
     var tbl = document.createElement('table');
     tbl.style.width = '100%';
+    tbl.id = "tagtabell";
     var tbdy = document.createElement('tbody');
     //table head list, don't know where if it will work
     var list = ["Ankomst","Tågnummer", "Origin", "Destination", "Departure"];
@@ -94,29 +95,54 @@ function tableCreate(data) {
 
     //loops foreach
     for (var transfer of data.station.transfers.transfer) {
+                var tr = document.createElement('tr');
                 var td = document.createElement('td');
+
                 //this makes it so i don't have to wonder what 0000-00-00 00:00:00 is
                 if(transfer.arrival == '0000-00-00 00:00:00'){
                   td.appendChild(document.createTextNode(''));
+                  var td = document.createElement('td');
+                  tr.appendChild(td)
+                  tbdy.appendChild(tr);
                 }else{
+                  var td = document.createElement('td');
                   td.appendChild(document.createTextNode(transfer.arrival + ' '));
+                  tr.appendChild(td)
+                  tbdy.appendChild(tr);
+
+                  td = document.createElement('td');
                   td.appendChild(document.createTextNode(transfer.train + ' '));
+                  tr.appendChild(td)
+                  tbdy.appendChild(tr);
+
+                  td = document.createElement('td');
                   td.appendChild(document.createTextNode(transfer.origin + ' '));
+                  tr.appendChild(td)
+                  tbdy.appendChild(tr);
+
+                  td = document.createElement('td');
                   td.appendChild(document.createTextNode(transfer.destination + ' '));
+
                   if(transfer.newDeparture == null){
+                  td = document.createElement('td');
+
                   td.appendChild(document.createTextNode(transfer.departure));
+                  tr.appendChild(td)
+                  tbdy.appendChild(tr);
+
                 } else{
+                  var td = document.createElement('td');
                   td.appendChild(document.createTextNode(transfer.newDeparture));
+                  tr.appendChild(td)
+                  tbdy.appendChild(tr);
                 }
                 }
 
                 //somehow works when i put tr here
                 //<tr>
                 //<td>transfer.arrival</td>
+                //<td>transfer.train</td>
                 //</tr>
-                var tr = document.createElement('tr');
-                tr.appendChild(td)
-                tbdy.appendChild(tr);
                 console.log(tr);
             }
     tbl.appendChild(tbdy);
