@@ -80,16 +80,17 @@ function tableCreate(data) {
     //table head list, don't know where if it will work
     var list = ["Ankomst","Tågnummer", "Origin", "Destination", "Departure"];
 
+    var th = document.createElement('th');
+    var tr = document.createElement('tr');
+
     list.forEach( function(item){
         var i = item;
-        var tr = document.createElement('tr');
-        var th = document.createElement('th');
-
-        tr.appendChild(document.createTextNode(item));
-        th.appendChild(tr);
-        tbdy.appendChild(th);
+        th.appendChild(document.createTextNode(item));
         console.log(item);
     });
+
+    tr.appendChild(th);
+    tbdy.appendChild(tr);
 
     //loops foreach
     for (var transfer of data.station.transfers.transfer) {
