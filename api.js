@@ -77,16 +77,26 @@ function tableCreate(data) {
     var tbl = document.createElement('table');
     tbl.style.width = '100%';
     var tbdy = document.createElement('tbody');
-    var th = document.createAttribute('th');
     //table head list, don't know where if it will work
-    let list = [];
+    var list = ["Ankomst","Tågnummer", "Origin", "Destination", "Departure"];
+
+    list.forEach( function(item){
+        var i = item;
+        var th = document.createElement('th');
+        var tr = document.createElement('tr');
+
+        th.appendChild(document.createTextNode(item));
+        tr.appendChild(th);
+        tbdy.appendChild(tr);
+        console.log(item);
+    });
 
     //loops foreach
     for (var transfer of data.station.transfers.transfer) {
                 var td = document.createElement('td');
                 //this makes it so i don't have to wonder what 0000-00-00 00:00:00 is
                 if(transfer.arrival == '0000-00-00 00:00:00'){
-                  td.appendChild(document.createTextNode('Fuck you'));
+                  td.appendChild(document.createTextNode(''));
                 }else{
                   td.appendChild(document.createTextNode(transfer.arrival + ' '));
                   td.appendChild(document.createTextNode(transfer.train + ' '));
@@ -106,7 +116,7 @@ function tableCreate(data) {
                 var tr = document.createElement('tr');
                 tr.appendChild(td)
                 tbdy.appendChild(tr);
-                //console.log(tr);
+                console.log(tr);
             }
     tbl.appendChild(tbdy);
     document.getElementById('data').appendChild(tbl);
