@@ -63,7 +63,6 @@ function callSuccessStation(data) {
         document.getElementById('data').innerHTML = 'station = null';
         tableDelete();
     } else {
-        document.getElementById('data').innerHTML = 'callSuccessStation: ' + data.station.name;
         tableCreate(data);
     }
 }

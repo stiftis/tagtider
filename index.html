@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <script type="text/javascript" src="api.js"></script>
   <script type="text/javascript" src="jquery-3.1.1.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body onload="stations()">
@@ -12,9 +13,16 @@
   <select id="select_station" onchange="getStation()">
     <option>Välj station</option>
   </select>
+  <br></br>
+    <div class="tab">
+      <button class="tablinks" onclick="switchTable()" id="defaultOpen">Ankommande</button>
+      <button class="tablinks" onclick="switchTable()">Avgående</button>
+    </div>
+    <br></br>
 
   <div id="data"></div>
-  <div id="data2"></div>
+
+
 </body>
 
 </html>
