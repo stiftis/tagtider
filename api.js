@@ -19,7 +19,7 @@ function stations() {
 
 function callSuccess(data) {
     document.getElementById('result').innerHTML = 'Data retrieved successfully';
-    //foreach. json object, adds station.name into select: obj,obj,array,obj
+    //foreach. json object, lägger till station.name i select: obj,obj,array,obj
     for (var station of data.stations.station) {
         var s = document.getElementById("select_station");
         var option = document.createElement("option");
@@ -41,11 +41,27 @@ function getStation() {
     s += '}';
 
     var js_object = JSON.parse(s);
+/* kolla om det går att skicka två ajax anrop
 
-    $.getJSON("ajax/station.php", js_object)
+
+    $.getJSON("ajax/arrivals.php", js_object)
         .done(function(data) {
             console.log("done");
-            callSuccessStation(data);
+            getInfo(data);
+        })
+        .fail(function() {
+            console.log('no dice: ' + errorCode);
+            document.getElementById('result').innerHTML = 'Error: ' + errorCode;
+        })
+        .always(function() {
+            console.log("complete");
+        });
+*/
+
+        $.getJSON("ajax/departures.php", js_object)
+        .done(function(data) {
+            console.log("done");
+            getInfo1(data);
         })
         .fail(function() {
             console.log('no dice: ' + errorCode);
@@ -57,20 +73,31 @@ function getStation() {
 
 }
 
-function callSuccessStation(data) {
+/* vi har bara ett ajax anrop igång just nu
+function getInfo(data) {
 
     if (data.station == null) {
         document.getElementById('data').innerHTML = 'station = null';
         tableDelete();
     } else {
-        tableCreate(data);
+        tableArrivals(data);
     }
 }
+*/
+function getInfo1(data){
 
-function tableCreate(data) {
+    if (data.station == null) {
+        document.getElementById('data').innerHTML = 'station = null';
+        tableDelete();
+    } else {
+        tableDeparture(data);
+    }
+}
+/* tabellen används inte just nu.
+function tableArrivals(data) {
     var tbl = document.createElement('table');
     tbl.style.width = '100%';
-    tbl.id = "tagtabell";
+    tbl.id = "arrivaltabell";
     var tbdy = document.createElement('tbody');
 
     var list = ["Ankomst", "Tågnummer", "Origin", "Destination", "Departure"];
@@ -101,7 +128,7 @@ function tableCreate(data) {
             tbdy.appendChild(tr);
         } else {
             var td = document.createElement('td');
-            td.appendChild(document.createTextNode(transfer.arrival));
+            td.appendC  hild(document.createTextNode(transfer.arrival));
             tr.appendChild(td)
             tbdy.appendChild(tr);
         }
@@ -133,6 +160,85 @@ function tableCreate(data) {
                 tr.appendChild(td)
                 tbdy.appendChild(tr);
             }
+        }
+    tbl.appendChild(tbdy);
+    document.getElementById('data').appendChild(tbl);
+}
+*/
+
+function tableDeparture(data) {
+    var tbl = document.createElement('table');
+    tbl.style.width = '100%';
+    tbl.id = "tagtabell";
+    var tbdy = document.createElement('tbody');
+
+    var list = ["Avgång", "Tågnummer", "Spår", "Destination", "Nytid" ,"Kommentar"];
+
+    var tr = document.createElement('tr');
+
+    list.forEach(function(item) {
+        var th = document.createElement('th');
+        var i = item;
+        th.appendChild(document.createTextNode(item));
+        tr.appendChild(th);
+        console.log(item);
+        tr.appendChild(th);
+    });
+
+    tbdy.appendChild(tr);
+
+    //loops foreach in the array transfer with the variable transfer
+    for (var transfer of data.station.transfers.transfer) {
+        var tr = document.createElement('tr');
+        var td = document.createElement('td');
+        
+        console.log(transfer.newDeparture);
+        td = document.createElement('td');
+        td.appendChild(document.createTextNode(transfer.departure));
+        tr.appendChild(td);
+        tbdy.appendChild(tr);
+
+        //creates an element of td and attatches the information from transfer.train to the created element. 
+        td = document.createElement('td');
+        td.appendChild(document.createTextNode(transfer.train));
+        tr.appendChild(td)
+        tbdy.appendChild(tr);
+
+        td = document.createElement('td');
+        td.appendChild(document.createTextNode(transfer.track));
+        tr.appendChild(td);
+        tbdy.appendChild(tr);
+
+        td = document.createElement('td');
+        td.appendChild(document.createTextNode(transfer.destination));
+        tr.appendChild(td);
+        tbdy.appendChild(tr);
+
+            if(transfer.newDeparture != null){
+            td = document.createElement('td');
+            td.appendChild(document.createTextNode(transfer.newDeparture));
+            tr.appendChild(td);
+            tbdy.appendChild(tr);
+        } else {
+            td = document.createElement('td');
+            td.appendChild(document.createTextNode(" "));
+            tr.appendChild(td);
+            tbdy.appendChild(tr);
+        }
+
+        if(transfer.comment != null){
+        td = document.createElement('td');
+        td.appendChild(document.createTextNode(transfer.comment));
+        tr.appendChild(td);
+        tbdy.appendChild(tr);
+        } else {
+            
+        td = document.createElement('td');
+        td.appendChild(document.createTextNode(" "));
+        tr.appendChild(td);
+        tbdy.appendChild(tr);
+        }
+
         }
     tbl.appendChild(tbdy);
     document.getElementById('data').appendChild(tbl);
