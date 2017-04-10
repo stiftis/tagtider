@@ -35,7 +35,6 @@ function callSuccess(data) {
 
 function getStation() {
 
-
     var index = document.getElementById('select_station').selectedIndex;
 
     var id = index;
@@ -86,7 +85,7 @@ function getInfo1(data){
     }
 }
 
-function switchTableDeparture(){
+function switchTableDeparture() {
     tableDelete();
     var index = document.getElementById('select_station').selectedIndex;
 
@@ -115,6 +114,7 @@ function switchTableDeparture(){
 }
 /*
 function tableArrivals(data) {
+    document.getElementById('data') = " ";
     var tbl = document.createElement('table');
     tbl.style.width = '100%';
     tbl.id = "arrivaltabell";
@@ -187,6 +187,8 @@ function tableArrivals(data) {
 */
 
 function tableDeparture(data) {
+    if(data.modified == false)
+        return alert("Choose a station!");
     var tbl = document.createElement('table');
     tbl.style.width = '100%';
     tbl.id = "tagtabell";
@@ -264,6 +266,6 @@ function tableDeparture(data) {
     document.getElementById('data').appendChild(tbl);
 }
 
-function tableDelete() {
-    document.getElementById('data') = "";
+function tableDelete(){
+     document.getElementById('data').innerHTML = "";
 }
