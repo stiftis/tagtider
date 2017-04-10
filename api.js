@@ -1,5 +1,8 @@
 //Javascript
 //fucking kill me
+
+var departure = true;
+
 function stations() {
 
     $.getJSON("ajax/stations.php")
@@ -29,6 +32,7 @@ function callSuccess(data) {
 
 }
 
+
 function getStation() {
 
 
@@ -41,23 +45,8 @@ function getStation() {
     s += '}';
 
     var js_object = JSON.parse(s);
-/* kolla om det går att skicka två ajax anrop
 
-
-    $.getJSON("ajax/arrivals.php", js_object)
-        .done(function(data) {
-            console.log("done");
-            getInfo(data);
-        })
-        .fail(function() {
-            console.log('no dice: ' + errorCode);
-            document.getElementById('result').innerHTML = 'Error: ' + errorCode;
-        })
-        .always(function() {
-            console.log("complete");
-        });
-*/
-
+        if(departure == true){
         $.getJSON("ajax/departures.php", js_object)
         .done(function(data) {
             console.log("done");
@@ -70,20 +59,23 @@ function getStation() {
         .always(function() {
             console.log("complete");
         });
+        } else if(departure == false){
+             $.getJSON("ajax/arrivals.php", js_object)
+        .done(function(data) {
+            console.log("done");
+            getInfo1(data);
+        })
+        .fail(function() {
+            console.log('no dice: ' + errorCode);
+            document.getElementById('result').innerHTML = 'Error: ' + errorCode;
+        })
+        .always(function() {
+            console.log("complete");
+        });
+        }
 
 }
 
-/* vi har bara ett ajax anrop igång just nu
-function getInfo(data) {
-
-    if (data.station == null) {
-        document.getElementById('data').innerHTML = 'station = null';
-        tableDelete();
-    } else {
-        tableArrivals(data);
-    }
-}
-*/
 function getInfo1(data){
 
     if (data.station == null) {
@@ -93,7 +85,35 @@ function getInfo1(data){
         tableDeparture(data);
     }
 }
-/* tabellen används inte just nu.
+
+function switchTableDeparture(){
+    tableDelete();
+    var index = document.getElementById('select_station').selectedIndex;
+
+    var id = index;
+
+    var s = '{"id":';
+    s += id;
+    s += '}';
+
+    var js_object = JSON.parse(s);
+
+    $.getJSON("ajax/departures.php", js_object)
+        .done(function(data) {
+            console.log("done");
+            tableDeparture(data);
+        })
+        .fail(function() {
+            console.log('no dice: ' + errorCode);
+            document.getElementById('result').innerHTML = 'Error: ' + errorCode;
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    
+
+}
+/*
 function tableArrivals(data) {
     var tbl = document.createElement('table');
     tbl.style.width = '100%';
