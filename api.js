@@ -98,7 +98,7 @@ function tableDeparture(data) {
     tbl.id = "tagtabell";
     var tbdy = document.createElement('tbody');
 
-    var list = ["Avgång", "Tågnummer", "Spår", "Destination", "Nytid" ,"Kommentar"];
+    var list = ["Avgång", "Tågnummer", "Spår", "Till", "NyTid" ,"Kommentar"];
 
     var tr = document.createElement('tr');
 
@@ -208,7 +208,7 @@ function tableArrivals(data) {
     tbl.id = "arrivaltabell";
     var tbdy = document.createElement('tbody');
 
-    var list = ["Ankomst", "Tågnummer", "Origin", "Destination", "Departure"];
+    var list = ["Ankomst", "Tågnummer", "Från", "NyTid", "Kommentar"];
 
     var tr = document.createElement('tr');
 
@@ -251,24 +251,32 @@ function tableArrivals(data) {
             tr.appendChild(td)
             tbdy.appendChild(tr);
 
-            td = document.createElement('td');
-            td.appendChild(document.createTextNode(transfer.destination));
-            tr.appendChild(td)
-            tbdy.appendChild(tr);
-            //newDeparture is always null if there are no changes
-            if (transfer.newDeparture == null) {
+            if (transfer.newArrival != null) {
                 td = document.createElement('td');
-                td.appendChild(document.createTextNode(transfer.departure));
+                td.appendChild(document.createTextNode(transfer.newArrival));
                 tr.appendChild(td)
                 tbdy.appendChild(tr);
 
             } else {
                 var td = document.createElement('td');
-                td.appendChild(document.createTextNode(transfer.newDeparture));
+                td.appendChild(document.createTextNode("X"));
                 tr.appendChild(td)
                 tbdy.appendChild(tr);
             }
-        }
+
+            //newDeparture is always null if there are no changes
+            if(transfer.comment != null){
+                td = document.createElement('td');
+                td.appendChild(document.createTextNode(transfer.comment));
+                tr.appendChild(td)
+                tbdy.appendChild(tr);
+              } else{
+                td = document.createElement('td');
+                td.appendChild(document.createTextNode(" "));
+                tr.appendChild(td)
+                tbdy.appendChild(tr);
+              }
+            }
     tbl.appendChild(tbdy);
     document.getElementById('data').appendChild(tbl);
 }
