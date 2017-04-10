@@ -270,12 +270,7 @@ function tableDeparture(data) {
     document.getElementById('data').appendChild(tbl);
 }
 
-<<<<<<< HEAD
 function tableDelete(){
      document.getElementById('data').innerHTML = "";
 }
-=======
-function tableDelete() {
-    document.getElementById('data') = " ";
-}
->>>>>>> d481726028da686fcc157778d6b2a6db6984b7b9
+
