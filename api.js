@@ -89,6 +89,9 @@ function getInfo1(data){
 
 //The whole table formatting
 function tableDeparture(data) {
+    if(data.modified == false)
+    return alert("Välj station");
+
     var tbl = document.createElement('table');
     tbl.style.width = '100%';
     tbl.id = "tagtabell";
@@ -195,6 +198,9 @@ function switchTableDeparture(){
 
 
 function tableArrivals(data) {
+    if(data.modified == false)
+    return alert("Välj station");
+
     var tbl = document.createElement('table');
     tbl.style.width = '100%';
     tbl.id = "arrivaltabell";
