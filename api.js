@@ -265,15 +265,6 @@ function tableArrivals(data) {
     document.getElementById('data').appendChild(tbl);
 }
 
-//The whole table formatting
-function tableDeparture(data) {
-    if(data.modified == false)
-        return alert("Choose a station!");
-        
-    var tbl = document.createElement('table');
-    tbl.style.width = '100%';
-    tbl.id = "tagtabell";
-    var tbdy = document.createElement('tbody');
 function switchTableArrival(){
   tableDelete();
 
@@ -301,8 +292,6 @@ function switchTableArrival(){
       });
 
 }
-
-
 
 
 function tableDelete() {
