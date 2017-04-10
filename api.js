@@ -192,6 +192,7 @@ function tableArrivals(data) {
 function tableDeparture(data) {
     if(data.modified == false)
         return alert("Choose a station!");
+        
     var tbl = document.createElement('table');
     tbl.style.width = '100%';
     tbl.id = "tagtabell";
