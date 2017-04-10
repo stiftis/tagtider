@@ -92,6 +92,7 @@ function tableDeparture(data) {
     if(data.modified == false)
     return alert("Välj station");
 
+    tableDelete();
     var tbl = document.createElement('table');
     tbl.style.width = '100%';
     tbl.id = "tagtabell";
@@ -200,6 +201,7 @@ function switchTableDeparture(){
 function tableArrivals(data) {
     if(data.modified == false)
     return alert("Välj station");
+    tableDelete();
 
     var tbl = document.createElement('table');
     tbl.style.width = '100%';
@@ -287,7 +289,7 @@ function switchTableArrival(){
   $.getJSON("ajax/arrivals.php", js_object)
       .done(function(data) {
           console.log("done");
-          tableDeparture(data);
+          tableArrivals(data);
       })
       .fail(function() {
           console.log('no dice: ' + errorCode);
