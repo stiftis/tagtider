@@ -3,6 +3,7 @@
 
 var departure = true;
 
+//Success or no
 function stations() {
 
     $.getJSON("ajax/stations.php")
@@ -32,9 +33,8 @@ function callSuccess(data) {
 
 }
 
-
+//Retrieves all of the train data
 function getStation() {
-
 
     var index = document.getElementById('select_station').selectedIndex;
 
@@ -82,6 +82,7 @@ function getInfo1(data){
         document.getElementById('data').innerHTML = 'station = null';
         tableDelete();
     } else {
+        document.getElementById('data').innerHTML = '';
         tableDeparture(data);
     }
 }
@@ -110,7 +111,7 @@ function switchTableDeparture(){
         .always(function() {
             console.log("complete");
         });
-    
+
 
 }
 /*
@@ -152,7 +153,7 @@ function tableArrivals(data) {
             tr.appendChild(td)
             tbdy.appendChild(tr);
         }
-            //creates an element of td and attatches the information from transfer.train to the created element. 
+            //creates an element of td and attatches the information from transfer.train to the created element.
             td = document.createElement('td');
             td.appendChild(document.createTextNode(transfer.train));
             tr.appendChild(td)
@@ -186,6 +187,7 @@ function tableArrivals(data) {
 }
 */
 
+//The whole table formatting
 function tableDeparture(data) {
     var tbl = document.createElement('table');
     tbl.style.width = '100%';
@@ -207,18 +209,19 @@ function tableDeparture(data) {
 
     tbdy.appendChild(tr);
 
+    //Makes use of loops to show data
     //loops foreach in the array transfer with the variable transfer
     for (var transfer of data.station.transfers.transfer) {
         var tr = document.createElement('tr');
         var td = document.createElement('td');
-        
-        console.log(transfer.newDeparture);
+
+        //console.log(transfer.newDeparture);
         td = document.createElement('td');
         td.appendChild(document.createTextNode(transfer.departure));
         tr.appendChild(td);
         tbdy.appendChild(tr);
 
-        //creates an element of td and attatches the information from transfer.train to the created element. 
+        //creates an element of td and attatches the information from transfer.train to the created element.
         td = document.createElement('td');
         td.appendChild(document.createTextNode(transfer.train));
         tr.appendChild(td)
@@ -252,7 +255,7 @@ function tableDeparture(data) {
         tr.appendChild(td);
         tbdy.appendChild(tr);
         } else {
-            
+
         td = document.createElement('td');
         td.appendChild(document.createTextNode(" "));
         tr.appendChild(td);
@@ -265,5 +268,5 @@ function tableDeparture(data) {
 }
 
 function tableDelete() {
-    document.getElementById('data') = "";
+    document.getElementById('data') = " ";
 }
