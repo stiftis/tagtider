@@ -1,11 +1,12 @@
 //Javascript
 //fucking kill me
 
+//global variable for checking which tab the user is on
 var departure = true;
 
 //Success or no
 function stations() {
-
+    //ajax request
     $.getJSON("ajax/stations.php")
         .done(function(data) {
             console.log("done");
@@ -23,7 +24,7 @@ function stations() {
 
 function callSuccess(data) {
     document.getElementById('result').innerHTML = 'Data retrieved successfully';
-    //foreach. json object, lägger till station.name i select: obj,obj,array,obj
+    //foreach. json object, adds station.name in select: obj,obj,array,obj
     for (var station of data.stations.station) {
         var s = document.getElementById("select_station");
         var option = document.createElement("option");
@@ -45,7 +46,8 @@ function getStation() {
     s += '}';
 
     var js_object = JSON.parse(s);
-
+        //if statment when the user changes tabs 
+        //and wants to check another station
         if(departure == true){
         $.getJSON("ajax/departures.php", js_object)
         .done(function(data) {
@@ -60,8 +62,8 @@ function getStation() {
             console.log("complete");
         });
         } else if(departure == false){
-             $.getJSON("ajax/arrivals.php", js_object)
-        .done(function(data) {
+        $.getJSON("ajax/arrivals.php", js_object)
+            .done(function(data) {
             console.log("done");
             getInfo1(data);
         })
@@ -76,6 +78,7 @@ function getStation() {
 
 }
 
+//
 function getInfo1(data){
 
     if (data.station == null) {
@@ -83,7 +86,11 @@ function getInfo1(data){
         tableDelete();
     } else {
         document.getElementById('data').innerHTML = '';
+        if(departure)
         tableDeparture(data);
+        else if(!departure){
+            tableArrivals(data);
+        }
     }
 }
 
@@ -93,6 +100,7 @@ function tableDeparture(data) {
     return alert("Välj station");
 
     tableDelete();
+    //creates table element
     var tbl = document.createElement('table');
     tbl.style.width = '100%';
     tbl.id = "tagtabell";
@@ -101,16 +109,14 @@ function tableDeparture(data) {
     var list = ["Avgång", "Tågnummer", "Spår", "Till", "NyTid" ,"Kommentar"];
 
     var tr = document.createElement('tr');
-
+    //foreach loop for appending list objects into the th element
     list.forEach(function(item) {
         var th = document.createElement('th');
-        var i = item;
         th.appendChild(document.createTextNode(item));
         tr.appendChild(th);
-        console.log(item);
         tr.appendChild(th);
     });
-
+    //close tablerow
     tbdy.appendChild(tr);
 
     //Makes use of loops to show data
@@ -119,13 +125,12 @@ function tableDeparture(data) {
         var tr = document.createElement('tr');
         var td = document.createElement('td');
 
-        //console.log(transfer.newDeparture);
+        //creates an element of td and attatches the information from transfer.departure to the created element.
         td = document.createElement('td');
         td.appendChild(document.createTextNode(transfer.departure));
         tr.appendChild(td);
         tbdy.appendChild(tr);
 
-        //creates an element of td and attatches the information from transfer.train to the created element.
         td = document.createElement('td');
         td.appendChild(document.createTextNode(transfer.train));
         tr.appendChild(td)
@@ -141,6 +146,7 @@ function tableDeparture(data) {
         tr.appendChild(td);
         tbdy.appendChild(tr);
 
+            //if statements for null exception
             if(transfer.newDeparture != null){
             td = document.createElement('td');
             td.appendChild(document.createTextNode(transfer.newDeparture));
@@ -152,7 +158,7 @@ function tableDeparture(data) {
             tr.appendChild(td);
             tbdy.appendChild(tr);
         }
-
+        //if statements for null exception
         if(transfer.comment != null){
         td = document.createElement('td');
         td.appendChild(document.createTextNode(transfer.comment));
@@ -166,13 +172,16 @@ function tableDeparture(data) {
         tbdy.appendChild(tr);
         }
 
-        }
+    }
+    //appends the tablebody into the table
     tbl.appendChild(tbdy);
+    //appends the table into the div "data"
     document.getElementById('data').appendChild(tbl);
 }
 
 function switchTableDeparture(){
     tableDelete();
+    departure = true;
     var index = document.getElementById('select_station').selectedIndex;
 
     var id = index;
@@ -197,7 +206,7 @@ function switchTableDeparture(){
         });
 }
 
-
+//Same format as tableDeparture but different values
 function tableArrivals(data) {
     if(data.modified == false)
     return alert("Välj station");
@@ -214,10 +223,8 @@ function tableArrivals(data) {
 
     list.forEach(function(item) {
         var th = document.createElement('th');
-        var i = item;
         th.appendChild(document.createTextNode(item));
         tr.appendChild(th);
-        console.log(item);
         tr.appendChild(th);
     });
 
@@ -251,6 +258,7 @@ function tableArrivals(data) {
             tr.appendChild(td)
             tbdy.appendChild(tr);
 
+            //if statements for null exception
             if (transfer.newArrival != null) {
                 td = document.createElement('td');
                 td.appendChild(document.createTextNode(transfer.newArrival));
@@ -259,12 +267,12 @@ function tableArrivals(data) {
 
             } else {
                 var td = document.createElement('td');
-                td.appendChild(document.createTextNode("X"));
+                td.appendChild(document.createTextNode(" "));
                 tr.appendChild(td)
                 tbdy.appendChild(tr);
             }
 
-            //newDeparture is always null if there are no changes
+            //if statements for null exception
             if(transfer.comment != null){
                 td = document.createElement('td');
                 td.appendChild(document.createTextNode(transfer.comment));
@@ -283,6 +291,7 @@ function tableArrivals(data) {
 
 function switchTableArrival(){
   tableDelete();
+  departure = false;
 
   var index = document.getElementById('select_station').selectedIndex;
 
@@ -308,7 +317,6 @@ function switchTableArrival(){
       });
 
 }
-
 
 function tableDelete() {
     document.getElementById('data').innerHTML = " ";
