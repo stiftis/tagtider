@@ -144,7 +144,7 @@ function tableDeparture(data) {
 
         td = document.createElement('td');
         td.appendChild(document.createTextNode(transfer.train));
-        tr.appendChild(td)
+        tr.appendChild(td);
         tbdy.appendChild(tr);
 
         td = document.createElement('td');
@@ -190,7 +190,8 @@ function tableDeparture(data) {
     document.getElementById('data').appendChild(tbl);
 }
 
-//calling ajax request
+//Calling an ajax request in order to switch the table information to make it
+//show info of departing trains
 function switchTableDeparture(){
     tableDelete();
     departure = true;
@@ -220,7 +221,8 @@ function switchTableDeparture(){
         });
 }
 
-//Same format as tableDeparture but different values
+//Creates a table to show the info of arriving trains.
+//Works similarly to tableDeparture.
 function tableArrivals(data) {
     if(data.modified == false)
     return alert("Välj station");
@@ -308,6 +310,8 @@ function tableArrivals(data) {
     document.getElementById('data').appendChild(tbl);
 }
 
+//Calling an ajax request in order to switch the table information to make it
+//show info of arriving trains
 function switchTableArrival(){
   tableDelete();
   departure = false;
@@ -337,7 +341,7 @@ function switchTableArrival(){
 
 }
 
-// All this does is delete an entire table when this is request
+//All this does is deleting an entire table when this is requested
 function tableDelete() {
     document.getElementById('data').innerHTML = " ";
 }
