@@ -21,7 +21,7 @@ function stations() {
         });
 }
 
-//
+//function called in the ajax request
 function callSuccess(data) {
     document.getElementById('result').innerHTML = 'Data retrieved successfully';
     //foreach. json object, adds station.name in select: obj,obj,array,obj
@@ -100,11 +100,9 @@ function getInfo1(data){
 //data from getInfo1
 //data from switchTableDeparture
 //
-//creates and appends
-
 //Creates a formatted table with various parameters using data from the
 //getInfo1 and switchtableDeparture function, creating table columns
-//for every info from the list. Also includes a appends for each columns.
+//for every info from the list. Also includes an append for each columns.
 function tableDeparture(data) {
     //when data.modified returns false the user has not yet selected
     //a station to call the information from.
