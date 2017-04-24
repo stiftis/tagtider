@@ -1,10 +1,8 @@
 //Javascript
-//fucking kill me
 
 //global variable for checking which tab the user is on
 var departure = true;
 
-//Success or no
 function stations() {
     //ajax request
     $.getJSON("ajax/stations.php")
@@ -40,11 +38,11 @@ function getStation() {
     var index = document.getElementById('select_station').selectedIndex;
 
     var id = index;
-
+    //create json object
     var s = '{"id":';
     s += id;
     s += '}';
-
+    //parse json
     var js_object = JSON.parse(s);
         //if statment when the user changes tabs 
         //and wants to check another station
@@ -95,6 +93,13 @@ function getInfo1(data){
 }
 
 //The whole table formatting
+//Parameteres
+//
+//data from getInfo1
+//data from switchTableDeparture
+//
+//creates and appends
+
 function tableDeparture(data) {
     if(data.modified == false)
     return alert("Välj station");
@@ -104,11 +109,14 @@ function tableDeparture(data) {
     var tbl = document.createElement('table');
     tbl.style.width = '100%';
     tbl.id = "tagtabell";
+    //creates table body
     var tbdy = document.createElement('tbody');
 
     var list = ["Avgång", "Tågnummer", "Spår", "Till", "NyTid" ,"Kommentar"];
 
+    //global table row variable
     var tr = document.createElement('tr');
+
     //foreach loop for appending list objects into the th element
     list.forEach(function(item) {
         var th = document.createElement('th');
@@ -179,9 +187,11 @@ function tableDeparture(data) {
     document.getElementById('data').appendChild(tbl);
 }
 
+//calling ajax request 
 function switchTableDeparture(){
     tableDelete();
     departure = true;
+
     var index = document.getElementById('select_station').selectedIndex;
 
     var id = index;
@@ -192,6 +202,7 @@ function switchTableDeparture(){
 
     var js_object = JSON.parse(s);
 
+    //ajax request in jquery
     $.getJSON("ajax/departures.php", js_object)
         .done(function(data) {
             console.log("done");

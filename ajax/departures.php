@@ -14,8 +14,11 @@ $options = array(
 
 // Handle and return
 $ch = curl_init();
+//set the curl options from the array $options
 curl_setopt_array($ch, $options);
+//
 $response = curl_exec($ch);
+
 
 $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
 $header = substr($response, 0, $header_size);
