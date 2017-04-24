@@ -3,8 +3,8 @@
 //global variable for checking which tab the user is on
 var departure = true;
 
+//Makes an ajax request, if it fails, it'll notify the user
 function stations() {
-    //ajax request
     $.getJSON("ajax/stations.php")
         .done(function(data) {
             console.log("done");
@@ -17,9 +17,9 @@ function stations() {
         .always(function() {
             console.log("complete");
         });
-
 }
 
+//
 function callSuccess(data) {
     document.getElementById('result').innerHTML = 'Data retrieved successfully';
     //foreach. json object, adds station.name in select: obj,obj,array,obj
@@ -32,7 +32,7 @@ function callSuccess(data) {
 
 }
 
-//Retrieves all of the train data
+//Retrieves all of the train data that's available from the API
 function getStation() {
 
     var index = document.getElementById('select_station').selectedIndex;
@@ -44,7 +44,7 @@ function getStation() {
     s += '}';
     //parse json
     var js_object = JSON.parse(s);
-        //if statment when the user changes tabs 
+        //if statment when the user changes tabs
         //and wants to check another station
         if(departure == true){
         $.getJSON("ajax/departures.php", js_object)
@@ -93,13 +93,16 @@ function getInfo1(data){
 }
 
 //The whole table formatting
-//Parameteres
+//Parameters
 //
 //data from getInfo1
 //data from switchTableDeparture
 //
 //creates and appends
 
+//Creates a formatted table with various parameters using data from the
+//getInfo1 and switchtableDeparture function, creating table columns
+//for every info from the list. Also includes a appends for each columns.
 function tableDeparture(data) {
     if(data.modified == false)
     return alert("Välj station");
@@ -187,7 +190,7 @@ function tableDeparture(data) {
     document.getElementById('data').appendChild(tbl);
 }
 
-//calling ajax request 
+//calling ajax request
 function switchTableDeparture(){
     tableDelete();
     departure = true;
@@ -228,7 +231,7 @@ function tableArrivals(data) {
     tbl.id = "arrivaltabell";
     var tbdy = document.createElement('tbody');
 
-    var list = ["Ankomst", "Tågnummer", "Från", "NyTid", "Kommentar"];
+    var list = ["Ankomst", "Tågnummer", "Spår", "Från", "NyTid", "Kommentar"];
 
     var tr = document.createElement('tr');
 
@@ -261,6 +264,11 @@ function tableArrivals(data) {
             //creates an element of td and attatches the information from transfer.train to the created element.
             td = document.createElement('td');
             td.appendChild(document.createTextNode(transfer.train));
+            tr.appendChild(td)
+            tbdy.appendChild(tr);
+
+            td = document.createElement('td');
+            td.appendChild(document.createTextNode(transfer.track));
             tr.appendChild(td)
             tbdy.appendChild(tr);
 
@@ -329,6 +337,7 @@ function switchTableArrival(){
 
 }
 
+// All this does is delete an entire table when this is request
 function tableDelete() {
     document.getElementById('data').innerHTML = " ";
 }
