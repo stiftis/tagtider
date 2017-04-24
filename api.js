@@ -5,6 +5,8 @@ var departure = true;
 
 //Makes an ajax request, if it fails, it'll notify the user
 function stations() {
+
+    //ajax request to get json object from server
     $.getJSON("ajax/stations.php")
         .done(function(data) {
             console.log("done");
@@ -38,11 +40,11 @@ function getStation() {
     var index = document.getElementById('select_station').selectedIndex;
 
     var id = index;
-    //create json object
+
     var s = '{"id":';
     s += id;
     s += '}';
-    //parse json
+
     var js_object = JSON.parse(s);
         //if statment when the user changes tabs
         //and wants to check another station
@@ -104,6 +106,8 @@ function getInfo1(data){
 //getInfo1 and switchtableDeparture function, creating table columns
 //for every info from the list. Also includes a appends for each columns.
 function tableDeparture(data) {
+    //when data.modified returns false the user has not yet selected
+    //a station to call the information from.
     if(data.modified == false)
     return alert("Välj station");
 
@@ -136,7 +140,9 @@ function tableDeparture(data) {
         var tr = document.createElement('tr');
         var td = document.createElement('td');
 
-        //creates an element of td and attatches the information from transfer.departure to the created element.
+        //creates an element of td and attatches the information from transfer.departure to the created element
+        //td appends the data from the transfer variable declared in the for loop
+        //when creating another element of td it closes the last created element of td.
         td = document.createElement('td');
         td.appendChild(document.createTextNode(transfer.departure));
         tr.appendChild(td);
@@ -205,7 +211,7 @@ function switchTableDeparture(){
 
     var js_object = JSON.parse(s);
 
-    //ajax request in jquery
+    //ajax request to get json object from server
     $.getJSON("ajax/departures.php", js_object)
         .done(function(data) {
             console.log("done");
